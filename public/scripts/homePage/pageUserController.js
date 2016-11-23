@@ -36,6 +36,15 @@ App.controller('controllerHome',
 
             }
 
+            $scope.fnSearchAutocomplte = function(){
+                $scope.movies = [];
+                service.searchAutocomplate().then(function (data) {
+                    data.forEach(function(predata) {
+                        $scope.movies.push(predata.name);
+                    });
+                });
+            }
+            
             $scope.showFromEdit = function(datas) {
                 console.log("edit", datas.id)
                 console.log(datas)
