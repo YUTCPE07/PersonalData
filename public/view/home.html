@@ -1,0 +1,203 @@
+<div class="bs-docs-section" ng-init='newpagination()'>
+
+    <h1 style="color: #fff">บันทึกข้อมูลบุคคล</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form novalidate name ="formSearch" class="myHideprint" >
+                <div class="input-group">
+                    <span class="input-group-btn" ng-show="searchBack">
+                        <button class="btn btn-success"  ng-click="backSearch()">
+                                <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
+                    </span>
+                    <autocomplete ng-model="dataSearch" data="movies" on-type="updateMovies"></autocomplete>
+                    <span class="input-group-btn" >
+                        <button class="btn btn-success" type="button"  ng-disabled="formSearch.$invalid"
+                                ng-click="myConSearch(dataSearch)">
+                                <span class="glyphicon glyphicon-search"></span> ค้นหาทั้งหมด!</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="col-md-6 text-right" ng-hide="paginationhide">
+            <component-pagination class="myHideprint" pages="pages" newpagination="newpagination">
+            </component-pagination>
+        </div>
+    </div>
+
+    <div class="well" style="margin-top: 10px;">
+        <div class="row myHideprint">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" style="text-align: center">
+                <button type="button" class="btn" id="idBtnAdd" ng-click="showFormAdd=true" ng-hide="showBtnAdd">
+                    <span class="glyphicon glyphicon-user"></span> เพิ่มข้อมูลใหม่
+                </button>
+                <br><br>
+            </div>
+            <div class="col-sm-4 text-right" style="padding-right: 50px;">
+                <!--ng-hide="hideForPrint"-->
+                <button class="btn btn-primary" ng-click="myPrint()" >
+                    <span class="glyphicon glyphicon-print"></span>
+                        พิมพ์หน้านี้</button>
+            </div>
+        </div>
+        <div class="row myHideprint">
+            <form-add ng-show="showFormAdd"></form-add>
+        </div>
+        <show-form-data></show-form-data>
+    </div>
+</div>
+
+<div id="fromEditModal" tabindex="-1" class="modal fade"
+     role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <form novalidate class="css-form" name="formEdit" ng-submit="editSubmit(dataFormEdit)">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridModalLabel"><span class="glyphicon glyphicon-edit"></span>
+                        เเก้ไขข้อมูล</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid bd-example-row">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="row">
+                                    <div align="right" class="col-sm-4"><label>ชือ:</label></div>
+                                    <div class="col-sm-6" style="text-align: center;">
+                                        <!--id="inputEditName"-->
+                                        <input type="text" class="form-control" maxlength="20"
+                                               ng-model="dataFormEdit.fname" name="fname" pattern="^([a-zA-Zก-ฮะ-ูเ-ไ็-์]+)$"
+                                               required>
+                                        <div ng-show="formEdit.$submitted || formEdit.fname.$touched">
+                                            <div ng-show="formEdit.fname.$error.required"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณากรอก ชื่อ
+                                                </strong>
+                                            </div>
+                                            <div ng-show="formEdit.fname.$error.pattern"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณากรอกเฉพาะภาษาไทย ห้ามกรอกตัวเลขเเละอักขระพิเศษ
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div align="right" class="col-sm-4"><label>นามสกุล:</label></div>
+                                    <div class="col-sm-6" style="text-align: center;">
+                                        <input id="inputEditName" type="text" class="form-control" maxlength="20"
+                                               ng-model="dataFormEdit.lname" name="lname" pattern="^([a-zA-Zก-ฮะ-ูเ-ไ็-์]+)$"
+                                               required>
+                                        <div ng-show="formEdit.$submitted || formEdit.lname.$touched">
+                                            <div ng-show="formEdit.lname.$error.required"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณากรอก นามสกุล
+                                                </strong>
+                                            </div>
+                                            <div ng-show="formEdit.lname.$error.pattern"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณากรอกเฉพาะภาษาไทย ห้ามกรอกตัวเลขเเละอักขระพิเศษ
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                </div>
+
+                                <br>
+
+                                <div class="row" style="text-align: center;">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-3">
+                                        <label class="form-check-inline">
+                                            <input class="form-check-input" ng-model="dataFormEdit.sex" type="radio"
+                                                   value=1 name="sex" id="boy">
+                                            เพศชาย
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-check-inline">
+                                            <input class="form-check-input" ng-model="dataFormEdit.sex" type="radio"
+                                                   value=0 name="sex" id="girl">
+                                            เพศหญิง
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-sm-4" align="right"><label>เบอร์โทรศัพท์:</label></div>
+                                    <div class="col-sm-3" style="text-align: center">
+                                        <input type="tel" class="form-control" pattern="[0]{1}[1-9]{9}"
+                                               maxlength="10"
+                                               ng-model="dataFormEdit.phone" name="phone" id="inputEditPhone"
+                                               required>
+                                        <div ng-show="formEdit.$submitted || formEdit.phone.$touched">
+                                            <div ng-show="formEdit.phone.$error.required"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณากรอกเบอร์โทรศัพท์</strong>
+                                            </div>
+                                            <div ng-show="formEdit.phone.$error.pattern"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรอกเฉพาะตัวเลข 0-9 </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5"></div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div align="right" class="col-sm-4"><label>ระดับการศึกษา:</label></div>
+                                    <div class="col-sm-6" style="text-align: center">
+                                        <select id="inputEditClass" name="class" ng-model="dataFormEdit.univer"
+                                                class="form-control" required>
+                                            <option value="">เลือกระดับการศึกษา</option>
+                                            <option value="1">ปริญญาตรี</option>
+                                            <option value="2">ปริญญาโท</option>
+                                            <option value="3">ปริญญาเอก</option>
+                                        </select>
+                                        <div ng-show="formEdit.$submitted || formEdit.class.$touched">
+                                            <div ng-show="formEdit.class.$error.required"><br>
+                                                <strong style="color: red;"><span
+                                                        class="glyphicon glyphicon-exclamation-sign"></span>
+                                                    กรุณาเลือกระดับการศึกษา
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                    <br>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" ng-disabled="formEdit.$invalid">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                        บันทึกการแก้ไข
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                        ยกลิก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
