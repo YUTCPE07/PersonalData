@@ -1,0 +1,18 @@
+<form novalidate name ="formSearch" >
+    <div class="input-group">
+        <!--style="color: #428BCA;"-->
+        <span class="input-group-btn" ng-show="searchBack">
+            <button class="btn btn-success"  ng-click="backSearch()">
+            <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
+        </span>
+        <input type="text" class="form-control" placeholder="กรอกข้อมูลเพื่อทำการค้นหา..." required
+               ng-model="dataSearch" name="Search"
+        >
+        <span class="input-group-btn"   >
+            <button class="btn btn-success" type="submit" ng-disabled="formSearch.$invalid"
+                    ng-click="myConSearch(dataSearch)"
+            ><span class="glyphicon glyphicon-search"></span> ค้นหาทั้งหมด!</button>
+        </span>
+    </div>
+</form>
+
