@@ -6,7 +6,7 @@ setup nodejs
 - cd PersonalData
 - npm install
 
-setup Mysql or carte about"PersonalData.jpg"
+setup Mysql or create new SQL about"PersonalData.jpg"
 - execute SQL script 
 - on path "PersonalData/Mysql/PersonalData.sql"
 
